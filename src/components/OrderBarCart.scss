@@ -1,0 +1,1033 @@
+
+/* ===========================================
+   TTATTATAO - PREMIUM ANIMATED CART
+   File: src/components/OrderBarCart.scss
+=========================================== */
+
+// ===========================================
+// ANIMATED BOTTOM ORDER BAR
+// ===========================================
+
+.order-bar {
+  z-index: 1000;
+
+  &__content {
+    position: relative;
+    transition:
+      background 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+
+  &--cart-active {
+    .order-bar__content {
+      background: #fff8f0;
+    }
+  }
+
+  &__text {
+    min-width: 0;
+
+    > strong {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    > span {
+      display: block;
+      margin-top: 6px;
+    }
+  }
+
+  // BAG WITH ANIMATED COUNT
+
+  &__cart-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #2b1a14;
+  }
+
+  &__bag {
+    position: relative;
+
+    display: grid;
+    place-items: center;
+
+    width: 37px;
+    height: 37px;
+    flex-shrink: 0;
+
+    border-radius: 11px;
+
+    color: #e63b2e;
+    background: #ffebe2;
+
+    &--animated {
+      animation: ttBagBounce 0.65s
+        cubic-bezier(0.2, 1.4, 0.35, 1)
+        both;
+    }
+  }
+
+  &__badge {
+    position: absolute;
+    top: -8px;
+    right: -10px;
+
+    display: grid;
+    place-items: center;
+
+    min-width: 22px;
+    height: 22px;
+    padding: 0 5px;
+
+    border: 2px solid #fff8f0;
+    border-radius: 30px;
+
+    color: #fff;
+    background: #e63b2e;
+
+    font-size: 10px;
+    font-weight: 900;
+    line-height: 1;
+
+    font-variant-numeric: tabular-nums;
+
+    box-shadow:
+      0 4px 12px rgba(230, 59, 46, 0.3);
+
+    animation: ttBadgePop 0.55s
+      cubic-bezier(0.2, 1.4, 0.35, 1)
+      both;
+  }
+
+  // FLOATING +1 / +2 FEEDBACK
+
+  &__float {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    z-index: 5;
+
+    padding: 4px 7px;
+    border-radius: 7px;
+
+    color: #fff;
+    background: #24a05b;
+
+    font-size: 11px;
+    font-weight: 900;
+
+    white-space: nowrap;
+    pointer-events: none;
+
+    box-shadow:
+      0 6px 18px rgba(36, 160, 91, 0.2);
+
+    animation: ttFloatPlus 0.85s
+      ease-out forwards;
+  }
+
+  // ITEM COUNT + PRICE
+
+  &__cart-subtotal {
+    color: #997f6c;
+    font-size: 12px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+
+    animation: ttSubtotalPop 0.4s ease both;
+  }
+
+  // ACTION BUTTON
+
+  &__button {
+    position: relative;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+
+    flex-shrink: 0;
+
+    border: none;
+
+    font-family: inherit;
+    font-weight: 900;
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+      transform 0.25s ease,
+      box-shadow 0.25s ease;
+
+    svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+
+      transition: transform 0.25s ease;
+    }
+
+    &:hover {
+      transform: translateY(-2px);
+
+      box-shadow:
+        0 10px 24px rgba(220, 52, 38, 0.22);
+
+      svg {
+        transform: translateX(4px);
+      }
+    }
+
+    &:active {
+      transform: scale(0.96);
+    }
+
+    &--pulse {
+      animation: ttButtonPulse 0.6s ease both;
+    }
+  }
+}
+
+// ===========================================
+// PREMIUM CART DRAWER
+// ===========================================
+
+.tt-cart {
+  --tt-red: #e63b2e;
+  --tt-dark: #261712;
+  --tt-muted: #8f796b;
+  --tt-cream: #fff9f1;
+
+  position: fixed;
+  inset: 0;
+  z-index: 12000;
+
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-end;
+
+  font-family: inherit;
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  // BACKDROP
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+
+    background: rgba(19, 9, 5, 0.72);
+
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+
+    animation: ttOverlayIn 0.25s ease both;
+  }
+
+  // CART PANEL
+
+  &__panel {
+    position: relative;
+    z-index: 1;
+
+    display: flex;
+    flex-direction: column;
+
+    width: min(100%, 470px);
+    height: 100dvh;
+    max-height: 100dvh;
+
+    overflow: hidden;
+
+    color: var(--tt-dark);
+    background: var(--tt-cream);
+
+    box-shadow:
+      -22px 0 60px rgba(20, 8, 4, 0.26);
+
+    animation: ttDrawerIn 0.4s
+      cubic-bezier(0.22, 1, 0.36, 1)
+      both;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 2;
+
+      height: 4px;
+
+      background: linear-gradient(
+        90deg,
+        #ef4936,
+        #f4ad75,
+        #bd2920
+      );
+    }
+  }
+
+  // HEADER
+
+  &__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 17px;
+
+    padding: 30px 26px 22px;
+
+    border-bottom: 1px solid #eadbd0;
+
+    background:
+      radial-gradient(
+        circle at 90% 0%,
+        rgba(230, 59, 46, 0.09),
+        transparent 55%
+      ),
+      #fff8f1;
+
+    h2 {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+
+      margin: 9px 0 6px;
+
+      color: #291913;
+      font-size: 30px;
+      font-weight: 900;
+      letter-spacing: -1px;
+
+      svg {
+        color: var(--tt-red);
+      }
+    }
+
+    p {
+      margin: 0;
+      color: var(--tt-muted);
+      font-size: 12px;
+    }
+  }
+
+  &__eyebrow {
+    color: #c95c40;
+
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: 2px;
+  }
+
+  &__close {
+    display: grid;
+    place-items: center;
+
+    width: 42px;
+    height: 42px;
+
+    flex-shrink: 0;
+
+    border: 1px solid #eddbcc;
+    border-radius: 12px;
+
+    color: #493026;
+    background: #fff;
+
+    cursor: pointer;
+
+    transition:
+      color 0.25s ease,
+      background 0.25s ease,
+      transform 0.25s ease;
+
+    &:hover {
+      transform: rotate(90deg);
+      color: #fff;
+      background: var(--tt-red);
+    }
+  }
+
+  // SCROLLABLE ITEMS AREA
+
+  &__body {
+    flex: 1;
+    min-height: 0;
+
+    padding: 12px 24px;
+
+    overflow-y: auto;
+    overscroll-behavior: contain;
+
+    scrollbar-width: thin;
+    scrollbar-color: #e8c1ad transparent;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  // EACH CART ITEM
+
+  &__item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+
+    padding: 19px 0;
+
+    border-bottom: 1px solid #eee2d8;
+
+    animation: ttCartItemIn 0.3s ease both;
+  }
+
+  &__thumb {
+    display: grid;
+    place-items: center;
+
+    width: 82px;
+    height: 82px;
+    flex-shrink: 0;
+
+    overflow: hidden;
+
+    border: 1px solid #ebd8c9;
+    border-radius: 13px;
+
+    color: var(--tt-red);
+    background: #f6e9dd;
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+
+      object-fit: cover;
+    }
+
+    > span {
+      font-size: 32px;
+    }
+  }
+
+  &__item-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__item-heading {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+
+    strong {
+      display: block;
+
+      color: #2e1b14;
+      font-size: 14px;
+      font-weight: 900;
+      line-height: 1.45;
+    }
+
+    span {
+      display: block;
+      margin-top: 5px;
+
+      color: var(--tt-muted);
+      font-size: 11px;
+    }
+  }
+
+  &__remove {
+    display: grid;
+    place-items: center;
+
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+
+    padding: 0;
+
+    border: 0;
+    border-radius: 8px;
+
+    color: #aa9486;
+    background: transparent;
+
+    cursor: pointer;
+
+    transition:
+      color 0.2s ease,
+      background 0.2s ease;
+
+    &:hover {
+      color: var(--tt-red);
+      background: #ffebe3;
+    }
+  }
+
+  &__item-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+
+    margin-top: 14px;
+  }
+
+  // DRAWER QUANTITY
+
+  &__quantity {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+
+    padding: 4px;
+
+    border: 1px solid #f0c9b8;
+    border-radius: 10px;
+
+    background: #fff0e7;
+
+    button {
+      display: grid;
+      place-items: center;
+
+      width: 30px;
+      height: 30px;
+
+      padding: 0;
+
+      border: 0;
+      border-radius: 7px;
+
+      color: #d7352b;
+      background: #fff;
+
+      cursor: pointer;
+
+      transition:
+        color 0.2s ease,
+        background 0.2s ease,
+        transform 0.2s ease;
+
+      &:last-child {
+        color: #fff;
+        background: var(--tt-red);
+      }
+
+      &:hover:not(:disabled) {
+        color: #fff;
+        background: #ba2c23;
+        transform: scale(1.05);
+      }
+
+      &:active:not(:disabled) {
+        transform: scale(0.92);
+      }
+
+      &:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  &__quantity-number {
+    display: grid;
+    place-items: center;
+
+    min-width: 26px;
+    padding: 0 3px;
+
+    color: #2e1b14;
+    font-size: 13px;
+    font-weight: 900;
+    font-variant-numeric: tabular-nums;
+
+    animation: ttBadgePop 0.3s ease;
+  }
+
+  &__item-price {
+    color: var(--tt-red);
+
+    font-size: 14px;
+    font-weight: 900;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+
+  // EMPTY CART
+
+  &__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 100%;
+    padding: 40px 12px;
+
+    text-align: center;
+
+    h3 {
+      margin: 20px 0 10px;
+
+      color: #281913;
+      font-size: 23px;
+      font-weight: 900;
+    }
+
+    p {
+      max-width: 265px;
+      margin: 0 0 24px;
+
+      color: var(--tt-muted);
+      font-size: 13px;
+      line-height: 1.75;
+    }
+  }
+
+  &__empty-icon {
+    display: grid;
+    place-items: center;
+
+    width: 86px;
+    height: 86px;
+
+    border-radius: 24px;
+
+    color: var(--tt-red);
+    background: #ffebe0;
+  }
+
+  &__explore {
+    display: inline-flex;
+    align-items: center;
+    gap: 11px;
+
+    min-height: 47px;
+    padding: 0 21px;
+
+    border-radius: 11px;
+
+    color: #fff;
+    background: var(--tt-red);
+
+    font-size: 12px;
+    font-weight: 900;
+    text-decoration: none;
+
+    transition: transform 0.25s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+    }
+  }
+
+  // CHECKOUT FOOTER
+
+  &__footer {
+    padding:
+      21px 24px
+      max(22px, env(safe-area-inset-bottom));
+
+    border-top: 1px solid #ead8c8;
+
+    background: #fff;
+
+    box-shadow:
+      0 -10px 30px rgba(47, 22, 11, 0.05);
+  }
+
+  &__total {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+
+    margin-bottom: 19px;
+
+    div {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    span {
+      color: #342017;
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    small {
+      color: #988376;
+      font-size: 10px;
+    }
+
+    > strong {
+      color: var(--tt-red);
+
+      font-size: 25px;
+      font-weight: 900;
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+    }
+  }
+
+  &__checkout {
+    position: relative;
+    overflow: hidden;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+
+    width: 100%;
+    min-height: 55px;
+    padding: 0 19px;
+
+    border-radius: 12px;
+
+    color: #fff;
+
+    background: linear-gradient(
+      135deg,
+      #f35540,
+      #d33127
+    );
+
+    font-size: 13px;
+    font-weight: 900;
+    text-decoration: none;
+
+    box-shadow:
+      0 10px 24px rgba(230, 59, 46, 0.2);
+
+    transition:
+      transform 0.25s ease,
+      box-shadow 0.25s ease;
+
+    svg {
+      flex-shrink: 0;
+      transition: transform 0.25s ease;
+    }
+
+    &:hover {
+      transform: translateY(-2px);
+
+      box-shadow:
+        0 14px 28px rgba(230, 59, 46, 0.28);
+
+      svg {
+        transform: translateX(4px);
+      }
+    }
+  }
+
+  &__note {
+    max-width: 310px;
+    margin: 14px auto 0;
+
+    color: #98867a;
+    font-size: 10px;
+    line-height: 1.7;
+    text-align: center;
+  }
+
+  button:focus-visible,
+  a:focus-visible {
+    outline: 3px solid rgba(230, 59, 46, 0.45);
+    outline-offset: 3px;
+  }
+}
+
+// ===========================================
+// ANIMATIONS
+// ===========================================
+
+@keyframes ttBagBounce {
+  0% {
+    transform: translateY(0) rotate(0);
+  }
+
+  30% {
+    transform: translateY(-8px) rotate(-11deg);
+  }
+
+  55% {
+    transform: translateY(2px) rotate(7deg);
+  }
+
+  75% {
+    transform: translateY(-2px) rotate(-3deg);
+  }
+
+  100% {
+    transform: translateY(0) rotate(0);
+  }
+}
+
+@keyframes ttBadgePop {
+  0% {
+    opacity: 0.5;
+    transform: scale(0.5);
+  }
+
+  55% {
+    opacity: 1;
+    transform: scale(1.3);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes ttFloatPlus {
+  0% {
+    opacity: 0;
+    transform:
+      translate(-50%, 10px)
+      scale(0.7);
+  }
+
+  25% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform:
+      translate(-50%, -36px)
+      scale(1.05);
+  }
+}
+
+@keyframes ttSubtotalPop {
+  0% {
+    opacity: 0.5;
+    transform: translateY(5px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes ttButtonPulse {
+  0% {
+    transform: scale(1);
+  }
+
+  35% {
+    transform: scale(1.065);
+    box-shadow:
+      0 0 0 7px rgba(230, 59, 46, 0.12);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes ttOverlayIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes ttDrawerIn {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes ttCartItemIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ===========================================
+// MOBILE
+// ===========================================
+
+@media (max-width: 600px) {
+  .order-bar {
+    &__cart-title {
+      gap: 9px;
+
+      > span:last-child {
+        font-size: 13px;
+      }
+    }
+
+    &__bag {
+      width: 34px;
+      height: 34px;
+    }
+
+    &__cart-subtotal {
+      font-size: 11px;
+    }
+
+    &__button {
+      gap: 8px;
+      min-width: 115px;
+
+      padding: 0 13px;
+      white-space: nowrap;
+    }
+  }
+
+  .tt-cart {
+    align-items: flex-end;
+
+    &__panel {
+      width: 100%;
+      height: min(92dvh, 850px);
+      max-height: 92dvh;
+
+      border-radius: 24px 24px 0 0;
+
+      animation: ttDrawerMobileIn 0.4s
+        cubic-bezier(0.22, 1, 0.36, 1)
+        both;
+    }
+
+    &__header {
+      padding: 25px 19px 19px;
+
+      h2 {
+        font-size: 26px;
+      }
+    }
+
+    &__body {
+      padding: 8px 17px;
+    }
+
+    &__item {
+      gap: 11px;
+      padding: 16px 0;
+    }
+
+    &__thumb {
+      width: 68px;
+      height: 68px;
+    }
+
+    &__item-heading strong {
+      font-size: 13px;
+    }
+
+    &__item-bottom {
+      flex-wrap: wrap;
+    }
+
+    &__footer {
+      padding:
+        18px 19px
+        max(20px, env(safe-area-inset-bottom));
+    }
+
+    &__checkout {
+      min-height: 52px;
+    }
+  }
+}
+
+@keyframes ttDrawerMobileIn {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ===========================================
+// SMALL PHONES
+// ===========================================
+
+@media (max-width: 375px) {
+  .order-bar {
+    &__text {
+      > strong {
+        font-size: 12px;
+      }
+
+      > span {
+        font-size: 10px;
+      }
+    }
+
+    &__button {
+      min-width: 100px;
+      padding: 0 10px;
+      font-size: 11px;
+    }
+  }
+
+  .tt-cart {
+    &__thumb {
+      width: 57px;
+      height: 57px;
+    }
+
+    &__quantity button {
+      width: 27px;
+      height: 27px;
+    }
+  }
+}
+
+// ===========================================
+// ACCESSIBILITY
+// ===========================================
+
+@media (prefers-reduced-motion: reduce) {
+  .order-bar *,
+  .order-bar *::before,
+  .order-bar *::after,
+  .tt-cart *,
+  .tt-cart *::before,
+  .tt-cart *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
