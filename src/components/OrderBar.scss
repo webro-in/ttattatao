@@ -1,0 +1,125 @@
+
+.order-bar {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1100;
+  display: none;
+
+  padding:
+    11px
+    15px
+    calc(11px + env(safe-area-inset-bottom));
+
+  border-top: 1px solid rgba(89, 53, 31, 0.12);
+  background: rgba(255, 249, 241, 0.97);
+  box-shadow: 0 -10px 35px rgba(41, 21, 12, 0.1);
+
+  @supports (backdrop-filter: blur(16px)) {
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  &__content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-width: 0;
+
+    strong {
+      color: #211813;
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    span {
+      color: #82766c;
+      font-size: 11px;
+    }
+  }
+
+  &__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    min-width: 135px;
+    min-height: 48px;
+    padding: 0 17px;
+    border-radius: 11px;
+    color: white;
+    background: linear-gradient(
+      135deg,
+      #ef4936,
+      #c82a21
+    );
+    box-shadow: 0 6px 18px rgba(230, 59, 46, 0.21);
+    font-size: 12px;
+    font-weight: 900;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: transform 0.25s ease;
+
+    svg {
+      width: 17px;
+      height: 17px;
+    }
+
+    &:active {
+      transform: scale(0.96);
+    }
+  }
+
+  a:focus-visible {
+    outline: 3px solid rgba(230, 59, 46, 0.45);
+    outline-offset: 3px;
+  }
+}
+
+@media (max-width: 700px) {
+  .order-bar {
+    display: block;
+  }
+
+  body {
+    padding-bottom: calc(80px + env(safe-area-inset-bottom));
+  }
+}
+
+@media (max-width: 380px) {
+  .order-bar {
+    &__text {
+      strong {
+        font-size: 12px;
+      }
+
+      span {
+        font-size: 10px;
+      }
+    }
+
+    &__button {
+      min-width: 115px;
+      padding: 0 12px;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .order-bar *,
+  .order-bar *::before,
+  .order-bar *::after {
+    transition: none !important;
+  }
+}

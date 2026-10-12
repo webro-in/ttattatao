@@ -1,0 +1,686 @@
+
+.delivery-platforms {
+  --dp-dark: #201411;
+  --dp-red: #ef4936;
+  --dp-cream: #fff7ed;
+
+  position: relative;
+  padding: 35px 0 95px;
+  background: #fff9f1;
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  &__panel {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+
+    padding: clamp(30px, 5vw, 64px);
+
+    border: 1px solid rgba(255, 231, 207, 0.15);
+    border-radius: 28px;
+
+    background:
+      radial-gradient(
+        circle at 95% 5%,
+        rgba(223, 65, 45, 0.16),
+        transparent 40%
+      ),
+      linear-gradient(
+        135deg,
+        #2b1915,
+        #19100e 70%
+      );
+
+    box-shadow: 0 25px 55px rgba(58, 29, 17, 0.12);
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+
+      background-image: radial-gradient(
+        rgba(255, 221, 190, 0.12) 0.7px,
+        transparent 0.7px
+      );
+
+      background-size: 24px 24px;
+      opacity: 0.35;
+    }
+  }
+
+  &__decoration {
+    position: absolute;
+    top: -90px;
+    right: -15px;
+    z-index: -1;
+
+    color: rgba(255, 255, 255, 0.035);
+    font-size: clamp(190px, 25vw, 370px);
+    font-weight: 900;
+    line-height: 1;
+
+    pointer-events: none;
+    user-select: none;
+  }
+
+  // HEADING
+
+  &__heading {
+    position: relative;
+    z-index: 1;
+
+    max-width: 700px;
+    margin: 0 auto 36px;
+
+    text-align: center;
+
+    h2 {
+      margin: 17px 0 13px;
+
+      color: var(--dp-cream);
+      font-size: clamp(29px, 4vw, 48px);
+      font-weight: 900;
+      line-height: 1.16;
+      letter-spacing: -1.7px;
+
+      span {
+        color: #ff8971;
+      }
+    }
+
+    p {
+      max-width: 480px;
+      margin: 0 auto;
+
+      color: #baa79b;
+      font-size: 13px;
+      line-height: 1.9;
+    }
+  }
+
+  &__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+
+    color: #ffc5ad;
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: 2px;
+  }
+
+  &__dot {
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+    background: var(--dp-red);
+
+    box-shadow:
+      0 0 0 5px rgba(239, 73, 54, 0.14);
+  }
+
+  // GRID
+
+  &__grid {
+    position: relative;
+    z-index: 1;
+
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  // PLATFORM CARD
+
+  &__card {
+    --card-accent: #ff5200;
+    --card-light: #fff0df;
+
+    position: relative;
+    isolation: isolate;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 24px;
+
+    min-width: 0;
+    min-height: 185px;
+    padding: 22px;
+
+    overflow: hidden;
+
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 18px;
+
+    background: linear-gradient(
+      140deg,
+      rgba(255, 255, 255, 0.075),
+      rgba(255, 255, 255, 0.025)
+    );
+
+    transition:
+      transform 0.3s ease,
+      border-color 0.3s ease,
+      box-shadow 0.3s ease;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: -70px;
+      right: -60px;
+      z-index: -1;
+
+      width: 180px;
+      height: 180px;
+
+      border-radius: 50%;
+      background: var(--card-accent);
+      opacity: 0.055;
+
+      filter: blur(38px);
+
+      transition:
+        opacity 0.3s ease,
+        transform 0.3s ease;
+    }
+
+    &:hover {
+      transform: translateY(-7px);
+      border-color: var(--card-accent);
+
+      box-shadow:
+        0 17px 35px rgba(0, 0, 0, 0.14);
+
+      &::before {
+        opacity: 0.19;
+        transform: scale(1.3);
+      }
+    }
+
+    &.is-active {
+      border-color: var(--card-accent);
+      box-shadow:
+        0 0 0 1px var(--card-accent),
+        0 18px 38px rgba(0, 0, 0, 0.18);
+
+      .delivery-platforms__logo {
+        animation: dpLogoBounce 0.65s ease;
+      }
+    }
+
+    // REAL BRAND COLOURS
+
+    &--swiggy {
+      --card-accent: #ff5200;
+      --card-light: #fff0e4;
+    }
+
+    &--zomato {
+      --card-accent: #e23744;
+      --card-light: #ffe8ea;
+    }
+
+    &--toing {
+      --card-accent: #a8f47c;
+      --card-light: #f2ffd9;
+
+      .delivery-platforms__logo {
+        color: #153c2b;
+
+        background: linear-gradient(
+          135deg,
+          #a8f47c 0%,
+          #a8f47c 55%,
+          #ffa3d1 100%
+        );
+      }
+
+      .delivery-platforms__button {
+        color: #17382b;
+        background: linear-gradient(
+          110deg,
+          #a8f47c,
+          #b9f39a 65%,
+          #ffa7d3
+        );
+
+        &:hover {
+          background: linear-gradient(
+            110deg,
+            #b9ff9d,
+            #ffc1e0
+          );
+        }
+      }
+    }
+  }
+
+  &__card-top {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    min-width: 0;
+  }
+
+  &__logo {
+    display: grid;
+    place-items: center;
+
+    width: 56px;
+    height: 56px;
+    flex-shrink: 0;
+
+    border-radius: 15px;
+
+    color: #fff;
+    background: var(--card-accent);
+
+    font-size: 29px;
+    font-weight: 900;
+    line-height: 1;
+
+    box-shadow:
+      0 8px 25px rgba(0, 0, 0, 0.16);
+  }
+
+  &__card-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-width: 0;
+
+    small {
+      color: #9f897e;
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: 1.5px;
+    }
+
+    strong {
+      color: #fff7ef;
+      font-size: 23px;
+      font-weight: 900;
+      letter-spacing: -0.7px;
+    }
+  }
+
+  &__card-spark {
+    margin-left: auto;
+    align-self: flex-start;
+
+    color: var(--card-accent);
+    font-size: 17px;
+    opacity: 0.8;
+
+    animation: dpSparkFloat 3s ease-in-out infinite;
+  }
+
+  // CLICKABLE BUTTONS
+
+  &__button {
+    position: relative;
+    isolation: isolate;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+
+    width: 100%;
+    min-height: 50px;
+    padding: 0 15px;
+
+    overflow: visible;
+
+    border: 0;
+    border-radius: 11px;
+
+    color: #fff;
+    background: var(--card-accent);
+
+    font: inherit;
+    font-size: 12px;
+    font-weight: 900;
+    text-align: left;
+
+    cursor: pointer;
+
+    box-shadow: 0 7px 18px rgba(0, 0, 0, 0.13);
+
+    transition:
+      transform 0.25s ease,
+      background 0.25s ease,
+      box-shadow 0.25s ease;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+
+      overflow: hidden;
+      border-radius: inherit;
+
+      background: linear-gradient(
+        110deg,
+        transparent 20%,
+        rgba(255, 255, 255, 0.32) 50%,
+        transparent 80%
+      );
+
+      transform: translateX(-120%);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    &:hover {
+      transform: translateY(-3px);
+
+      box-shadow:
+        0 12px 25px rgba(0, 0, 0, 0.2);
+
+      svg {
+        transform: translateX(4px);
+      }
+    }
+
+    &:active {
+      transform: scale(0.96);
+    }
+
+    &.is-clicked {
+      animation: dpButtonPress 0.7s ease;
+
+      &::before {
+        animation: dpButtonShine 0.75s ease;
+      }
+    }
+
+    svg {
+      position: relative;
+      z-index: 2;
+
+      flex-shrink: 0;
+      transition: transform 0.25s ease;
+    }
+
+    &:focus-visible {
+      outline: 3px solid #fff;
+      outline-offset: 5px;
+    }
+  }
+
+  &__button-text {
+    position: relative;
+    z-index: 2;
+  }
+
+  // CLICK SPARKLE BURST
+
+  &__burst {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+
+    pointer-events: none;
+
+    i {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+
+      width: 7px;
+      height: 7px;
+
+      border-radius: 50%;
+
+      background: var(--card-accent);
+      box-shadow: 0 0 12px var(--card-accent);
+
+      opacity: 0;
+
+      animation: dpParticleBurst 0.75s ease-out forwards;
+    }
+
+    i:nth-child(1) {
+      --move-x: -90px;
+      --move-y: -45px;
+    }
+
+    i:nth-child(2) {
+      --move-x: 0px;
+      --move-y: -75px;
+    }
+
+    i:nth-child(3) {
+      --move-x: 90px;
+      --move-y: -42px;
+    }
+
+    i:nth-child(4) {
+      --move-x: -85px;
+      --move-y: 44px;
+    }
+
+    i:nth-child(5) {
+      --move-x: 0px;
+      --move-y: 75px;
+    }
+
+    i:nth-child(6) {
+      --move-x: 85px;
+      --move-y: 45px;
+    }
+  }
+
+  &__note {
+    margin: 24px 0 0;
+
+    color: #9c897e;
+    font-size: 10px;
+    line-height: 1.7;
+    text-align: center;
+  }
+}
+
+// ANIMATIONS
+
+@keyframes dpButtonPress {
+  0% {
+    transform: scale(1);
+  }
+
+  30% {
+    transform: scale(0.94);
+  }
+
+  65% {
+    transform: scale(1.045);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes dpButtonShine {
+  0% {
+    opacity: 0;
+    transform: translateX(-120%);
+  }
+
+  35% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(120%);
+  }
+}
+
+@keyframes dpLogoBounce {
+  0%,
+  100% {
+    transform: scale(1) rotate(0);
+  }
+
+  35% {
+    transform: scale(1.17) rotate(-8deg);
+  }
+
+  70% {
+    transform: scale(0.96) rotate(4deg);
+  }
+}
+
+@keyframes dpParticleBurst {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+
+  35% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform:
+      translate(
+        calc(-50% + var(--move-x)),
+        calc(-50% + var(--move-y))
+      )
+      scale(0.1);
+  }
+}
+
+@keyframes dpSparkFloat {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0);
+  }
+
+  50% {
+    transform: translateY(-5px) rotate(20deg);
+  }
+}
+
+// TABLET
+
+@media (max-width: 900px) {
+  .delivery-platforms {
+    padding: 25px 0 70px;
+
+    &__panel {
+      padding: 38px 26px;
+    }
+
+    &__grid {
+      gap: 11px;
+    }
+
+    &__card {
+      padding: 16px;
+      min-height: 170px;
+    }
+
+    &__logo {
+      width: 45px;
+      height: 45px;
+      font-size: 23px;
+    }
+
+    &__card-copy strong {
+      font-size: 19px;
+    }
+
+    &__button {
+      min-height: 48px;
+      font-size: 10px;
+      padding: 0 11px;
+    }
+  }
+}
+
+// MOBILE
+
+@media (max-width: 650px) {
+  .delivery-platforms {
+    padding: 18px 0 60px;
+
+    &__panel {
+      padding: 35px 19px;
+      border-radius: 21px;
+    }
+
+    &__heading {
+      margin-bottom: 27px;
+
+      h2 {
+        font-size: clamp(28px, 7vw, 37px);
+        letter-spacing: -1px;
+      }
+
+      p {
+        font-size: 12px;
+      }
+    }
+
+    &__eyebrow {
+      font-size: 8px;
+      letter-spacing: 1.4px;
+    }
+
+    &__grid {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    &__card {
+      min-height: 138px;
+      gap: 18px;
+      padding: 17px;
+      border-radius: 15px;
+    }
+
+    &__logo {
+      width: 48px;
+      height: 48px;
+    }
+
+    &__card-copy strong {
+      font-size: 21px;
+    }
+
+    &__button {
+      min-height: 47px;
+      font-size: 11px;
+    }
+
+    &__note {
+      margin-top: 20px;
+      font-size: 9px;
+    }
+  }
+}
+
+// REDUCED MOTION
+
+@media (prefers-reduced-motion: reduce) {
+  .delivery-platforms {
+    *,
+    *::before,
+    *::after {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+}
