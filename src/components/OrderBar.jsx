@@ -1,10 +1,4 @@
-
-import {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { createPortal } from "react-dom";
 import { useCart } from "../context/CartContext";
@@ -93,13 +87,8 @@ function FoodThumbnail({ dish }) {
 // ======================================
 
 function CartDrawer({ onClose, triggerRef }) {
-  const {
-    cartItems,
-    totalItems,
-    subtotal,
-    changeQuantity,
-    removeDish,
-  } = useCart();
+  const { cartItems, totalItems, subtotal, changeQuantity, removeDish } =
+    useCart();
 
   const panelRef = useRef(null);
   const closeRef = useRef(null);
@@ -107,8 +96,7 @@ function CartDrawer({ onClose, triggerRef }) {
   // ESC, FOCUS TRAP AND SCROLL LOCK
 
   useEffect(() => {
-    const previousOverflow =
-      document.body.style.overflow;
+    const previousOverflow = document.body.style.overflow;
 
     document.body.style.overflow = "hidden";
     closeRef.current?.focus();
@@ -125,8 +113,8 @@ function CartDrawer({ onClose, triggerRef }) {
 
       const elements = Array.from(
         panelRef.current.querySelectorAll(
-          'button:not(:disabled), a[href], [tabindex]:not([tabindex="-1"])'
-        )
+          'button:not(:disabled), a[href], [tabindex]:not([tabindex="-1"])',
+        ),
       );
 
       if (!elements.length) return;
@@ -134,34 +122,21 @@ function CartDrawer({ onClose, triggerRef }) {
       const first = elements[0];
       const last = elements[elements.length - 1];
 
-      if (
-        event.shiftKey &&
-        document.activeElement === first
-      ) {
+      if (event.shiftKey && document.activeElement === first) {
         event.preventDefault();
         last.focus();
-      } else if (
-        !event.shiftKey &&
-        document.activeElement === last
-      ) {
+      } else if (!event.shiftKey && document.activeElement === last) {
         event.preventDefault();
         first.focus();
       }
     }
 
-    document.addEventListener(
-      "keydown",
-      handleKeyDown
-    );
+    document.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      document.removeEventListener(
-        "keydown",
-        handleKeyDown
-      );
+      document.removeEventListener("keydown", handleKeyDown);
 
-      document.body.style.overflow =
-        previousOverflow;
+      document.body.style.overflow = previousOverflow;
 
       // Do not steal focus from navigation.
       if (!window.location.hash) {
@@ -174,11 +149,7 @@ function CartDrawer({ onClose, triggerRef }) {
 
   return createPortal(
     <div className="tt-cart">
-      <div
-        className="tt-cart__overlay"
-        onClick={onClose}
-        aria-hidden="true"
-      />
+      <div className="tt-cart__overlay" onClick={onClose} aria-hidden="true" />
 
       <section
         ref={panelRef}
@@ -191,9 +162,7 @@ function CartDrawer({ onClose, triggerRef }) {
 
         <div className="tt-cart__header">
           <div>
-            <span className="tt-cart__eyebrow">
-              YOUR TTATTATAO ORDER
-            </span>
+            <span className="tt-cart__eyebrow">YOUR TTATTATAO ORDER</span>
 
             <h2 id="tt-cart-title">
               <Icon name="bag" size={25} />
@@ -202,9 +171,7 @@ function CartDrawer({ onClose, triggerRef }) {
 
             <p>
               {totalItems}{" "}
-              {totalItems === 1
-                ? "delicious item"
-                : "delicious items"}
+              {totalItems === 1 ? "delicious item" : "delicious items"}
             </p>
           </div>
 
@@ -225,10 +192,7 @@ function CartDrawer({ onClose, triggerRef }) {
           {cartItems.length > 0 ? (
             <div className="tt-cart__list">
               {cartItems.map((item) => (
-                <article
-                  className="tt-cart__item"
-                  key={item.id}
-                >
+                <article className="tt-cart__item" key={item.id}>
                   <FoodThumbnail dish={item} />
 
                   <div className="tt-cart__item-content">
@@ -245,9 +209,7 @@ function CartDrawer({ onClose, triggerRef }) {
                       <button
                         type="button"
                         className="tt-cart__remove"
-                        onClick={() =>
-                          removeDish(item.id)
-                        }
+                        onClick={() => removeDish(item.id)}
                         aria-label={`Remove ${item.name}`}
                       >
                         <Icon name="trash" size={16} />
@@ -264,9 +226,7 @@ function CartDrawer({ onClose, triggerRef }) {
                       >
                         <button
                           type="button"
-                          onClick={() =>
-                            changeQuantity(item.id, -1)
-                          }
+                          onClick={() => changeQuantity(item.id, -1)}
                           aria-label={`Decrease ${item.name}`}
                         >
                           <Icon name="minus" size={16} />
@@ -282,9 +242,7 @@ function CartDrawer({ onClose, triggerRef }) {
 
                         <button
                           type="button"
-                          onClick={() =>
-                            changeQuantity(item.id, 1)
-                          }
+                          onClick={() => changeQuantity(item.id, 1)}
                           disabled={item.quantity >= 99}
                           aria-label={`Increase ${item.name}`}
                         >
@@ -293,9 +251,7 @@ function CartDrawer({ onClose, triggerRef }) {
                       </div>
 
                       <strong className="tt-cart__item-price">
-                        {formatPrice(
-                          item.price * item.quantity
-                        )}
+                        {formatPrice(item.price * item.quantity)}
                       </strong>
                     </div>
                   </div>
@@ -310,10 +266,7 @@ function CartDrawer({ onClose, triggerRef }) {
 
               <h3>Your Cart is Empty</h3>
 
-              <p>
-                A little craving deserves
-                something delicious.
-              </p>
+              <p>A little craving deserves something delicious.</p>
 
               <a
                 href="#menu"
@@ -335,36 +288,31 @@ function CartDrawer({ onClose, triggerRef }) {
             <div className="tt-cart__total">
               <div>
                 <span>Menu Subtotal</span>
-                <small>
-                  Taxes & delivery charges extra
-                </small>
+                <small>Taxes & delivery charges extra</small>
               </div>
 
               <strong>{formatPrice(subtotal)}</strong>
             </div>
 
             <a
-              href="#contact"
+              href="#build-order"
               data-order-loader="true"
               className="tt-cart__checkout"
               onClick={onClose}
             >
-              <span>
-                Proceed to Order
-              </span>
-
+              <span>Proceed to Order</span>
               <Icon name="arrow" size={19} />
             </a>
 
             <p className="tt-cart__note">
-              Complete your delivery details to
-              send an order request on WhatsApp.
+              Complete your delivery details to send an order request on
+              WhatsApp.
             </p>
           </div>
         )}
       </section>
     </div>,
-    document.body
+    document.body,
   );
 }
 
@@ -375,8 +323,7 @@ function CartDrawer({ onClose, triggerRef }) {
 export default function OrderBar() {
   const { totalItems, subtotal } = useCart();
 
-  const [isCartOpen, setIsCartOpen] =
-    useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   const [animation, setAnimation] = useState({
     id: 0,
@@ -410,15 +357,12 @@ export default function OrderBar() {
 
       window.clearTimeout(animationTimer.current);
 
-      animationTimer.current = window.setTimeout(
-        () => {
-          setAnimation((current) => ({
-            ...current,
-            difference: 0,
-          }));
-        },
-        850
-      );
+      animationTimer.current = window.setTimeout(() => {
+        setAnimation((current) => ({
+          ...current,
+          difference: 0,
+        }));
+      }, 850);
     }
 
     previousItems.current = totalItems;
@@ -433,9 +377,7 @@ export default function OrderBar() {
   return (
     <>
       <aside
-        className={`order-bar ${
-          hasItems ? "order-bar--cart-active" : ""
-        }`}
+        className={`order-bar ${hasItems ? "order-bar--cart-active" : ""}`}
         aria-label="Quick ordering"
       >
         <div className="order-bar__content">
@@ -447,9 +389,7 @@ export default function OrderBar() {
                 <strong className="order-bar__cart-title">
                   <span
                     className={`order-bar__bag ${
-                      animation.id
-                        ? "order-bar__bag--animated"
-                        : ""
+                      animation.id ? "order-bar__bag--animated" : ""
                     }`}
                     key={`bag-${animation.id}`}
                     aria-hidden="true"
@@ -460,9 +400,7 @@ export default function OrderBar() {
                       className="order-bar__badge"
                       key={`badge-${animation.id}`}
                     >
-                      {totalItems > 99
-                        ? "99+"
-                        : totalItems}
+                      {totalItems > 99 ? "99+" : totalItems}
                     </span>
 
                     {animation.difference > 0 && (
@@ -472,31 +410,13 @@ export default function OrderBar() {
                     )}
                   </span>
 
-                  <span>
-                    Your Cart
-                  </span>
+                  <span>Your Cart</span>
                 </strong>
-
-                <span
-                  className="order-bar__cart-subtotal"
-                  key={`subtotal-${animation.id}`}
-                  aria-live="polite"
-                  aria-atomic="true"
-                >
-                  {totalItems}{" "}
-                  {totalItems === 1
-                    ? "item"
-                    : "items"}
-                  {" · "}
-                  {formatPrice(subtotal)}
-                </span>
               </>
             ) : (
               <>
                 <strong>Craving Something?</strong>
-                <span>
-                  Discover your next favourite.
-                </span>
+                <span>Discover your next favourite.</span>
               </>
             )}
           </div>
@@ -508,9 +428,7 @@ export default function OrderBar() {
               ref={triggerRef}
               type="button"
               className={`order-bar__button ${
-                animation.id
-                  ? "order-bar__button--pulse"
-                  : ""
+                animation.id ? "order-bar__button--pulse" : ""
               }`}
               key={`cart-button-${animation.id}`}
               onClick={() => setIsCartOpen(true)}
@@ -533,12 +451,7 @@ export default function OrderBar() {
 
       {/* CART DRAWER */}
 
-      {isCartOpen && (
-        <CartDrawer
-          onClose={closeCart}
-          triggerRef={triggerRef}
-        />
-      )}
+      {isCartOpen && <CartDrawer onClose={closeCart} triggerRef={triggerRef} />}
     </>
   );
 }
